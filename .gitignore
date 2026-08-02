@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Xcode user data and build output
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+Packages/
+
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.p12
+*.mobileprovision
+
+# Editor settings
+.idea/
+.vscode/
