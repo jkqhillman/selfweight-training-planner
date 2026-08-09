@@ -34,6 +34,8 @@ python3 -m http.server 8000
 
 然后在浏览器打开 `http://localhost:8000`。在 iPhone Safari 中选择“添加到主屏幕”即可安装 PWA。Service Worker 首次打开后缓存页面和动作素材，因此后续可离线使用。
 
+公开网页地址：<https://jkqhillman.github.io/selfweight-training-planner/>。在 iPhone Safari 打开该地址，点击“分享”并选择“添加到主屏幕”，即可长期作为本机 App 使用。
+
 ### iPhone App
 
 使用 Xcode 打开 `TrainWellNative/TrainWellNative.xcodeproj`，选择 iOS 模拟器或已配置签名的设备后运行。最低系统版本为 iOS 17。

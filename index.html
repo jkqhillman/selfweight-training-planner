@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#173a37" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.svg" />
     <link rel="stylesheet" href="styles.css" />
     <title>练得刚好</title>
   </head>
@@ -37,7 +37,7 @@
         <div class="section-heading"><div><p class="section-label">今日份额</p><h2 id="session-title">力量 A</h2></div><button class="text-button" id="switch-session">切换</button></div>
         <p class="session-summary" id="session-summary"></p>
         <div class="workout-list" id="workout-list"></div>
-        <button class="primary-button" id="complete-session">完成今日训练</button>
+        <div class="today-actions"><button class="primary-button" id="complete-session">完成今日训练</button><button class="rest-today" id="rest-today">今日休息</button></div>
       </section>
 
       <section class="quick-section">
@@ -63,6 +63,25 @@
         <ol class="guide-steps" id="guide-steps"></ol>
         <a id="wiki-link" class="wiki-link" target="_blank" rel="noopener">在百度百科查阅</a>
         <p class="video-credit" id="video-credit"></p>
+      </div>
+    </dialog>
+    <dialog id="feedback-dialog" class="feedback-dialog">
+      <div class="feedback-panel">
+        <div class="section-heading"><h2 id="feedback-title">动作状态反馈</h2><button class="icon-button" value="cancel" onclick="this.closest('dialog').close()" aria-label="关闭">×</button></div>
+        <p class="feedback-context" id="feedback-context"></p>
+        <div class="feedback-options" id="feedback-options">
+          <button data-feedback-kind="tight"><strong>肌肉紧绷</strong><span>酸胀、发紧，但没有关节痛</span></button>
+          <button data-feedback-kind="pain"><strong>疼痛或不稳</strong><span>关节痛、刺痛、麻木或站不稳</span></button>
+          <button data-feedback-kind="good"><strong>感觉稳定</strong><span>可以控制动作和呼吸</span></button>
+        </div>
+        <p class="feedback-result" id="feedback-result" role="status" aria-live="polite" hidden></p>
+      </div>
+    </dialog>
+    <dialog id="rest-dialog" class="feedback-dialog">
+      <div class="feedback-panel">
+        <div class="section-heading"><h2 id="rest-title">动作休息</h2><button class="icon-button" value="cancel" onclick="this.closest('dialog').close()" aria-label="关闭">×</button></div>
+        <p class="feedback-context" id="rest-context">选择今天尚未恢复的部位。</p>
+        <div class="feedback-options" id="rest-options"></div>
       </div>
     </dialog>
     <script src="app.js"></script>
