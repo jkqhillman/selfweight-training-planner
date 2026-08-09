@@ -7,54 +7,64 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="icon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="app-icon-180.png" />
     <link rel="stylesheet" href="styles.css" />
     <title>练得刚好</title>
   </head>
   <body>
     <main class="app-shell">
-      <header class="topbar">
-        <div><p class="eyebrow" id="today-date">今日训练</p><h1>练得刚好</h1></div>
-        <button class="icon-button" id="settings-button" aria-label="设置" title="设置">⚙</button>
-      </header>
+      <section class="app-view is-active" id="today-view" data-view="today" aria-labelledby="today-title">
+        <header class="topbar">
+          <div><p class="eyebrow" id="today-date">今日训练</p><h1 id="today-title">练得刚好</h1></div>
+          <button class="icon-button" id="settings-button" aria-label="打开设置" title="设置">⚙</button>
+        </header>
 
-      <section class="readiness" aria-labelledby="readiness-title">
-        <div><p class="section-label">每日状态</p><h2 id="readiness-title">今天身体感觉如何？</h2></div>
-        <div class="readiness-options" id="readiness-options">
-          <button data-readiness="low">累</button><button class="selected" data-readiness="normal">正常</button><button data-readiness="high">状态好</button>
-        </div>
-        <p class="status-copy" id="status-copy">按计划完成，所有动作保留 2 次余力。</p>
+        <section class="readiness" aria-labelledby="readiness-title">
+          <div><p class="section-label">每日状态</p><h2 id="readiness-title">今天身体感觉如何？</h2></div>
+          <div class="readiness-options" id="readiness-options">
+            <button data-readiness="low">累</button><button class="selected" data-readiness="normal">正常</button><button data-readiness="high">状态好</button>
+          </div>
+          <p class="status-copy" id="status-copy">按计划完成，所有动作保留 2 次余力。</p>
+        </section>
+
+        <section class="plan-section">
+          <div class="section-heading"><div><p class="section-label">今日份额</p><h2 id="session-title">力量 A</h2></div><button class="text-button" id="switch-session">切换</button></div>
+          <p class="session-summary" id="session-summary"></p>
+          <div class="workout-list" id="workout-list"></div>
+          <div class="today-actions"><button class="primary-button" id="complete-session">完成今日训练</button><button class="rest-today" id="rest-today">今日休息</button></div>
+        </section>
+
+        <section class="quick-section">
+          <div class="section-heading"><div><p class="section-label">每日活动</p><h2>5 分钟基础活动</h2></div></div>
+          <div class="repair-grid" id="repair-list"></div>
+        </section>
       </section>
 
-      <section class="calendar-section" aria-label="训练记录">
-        <div class="section-heading"><div><p class="section-label">训练记录</p><h2 id="calendar-title">本月</h2></div><div class="calendar-controls"><button class="icon-button" id="previous-month" aria-label="上个月">‹</button><button class="icon-button" id="next-month" aria-label="下个月">›</button></div></div>
-        <div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
-        <div class="calendar-grid" id="calendar-grid"></div>
-        <p id="calendar-summary">本月从第一份训练开始。</p>
+      <section class="app-view" id="record-view" data-view="record" aria-labelledby="record-title" hidden>
+        <header class="topbar view-header"><div><p class="eyebrow">训练记录</p><h1 id="record-title">本月进度</h1></div></header>
+        <section class="calendar-section" aria-label="训练记录">
+          <div class="section-heading"><h2 id="calendar-title">本月</h2><div class="calendar-controls"><button class="icon-button" id="previous-month" aria-label="上个月">‹</button><button class="icon-button" id="next-month" aria-label="下个月">›</button></div></div>
+          <div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+          <div class="calendar-grid" id="calendar-grid"></div>
+          <p id="calendar-summary">本月从第一份训练开始。</p>
+        </section>
       </section>
 
-      <section class="plan-section">
-        <div class="section-heading"><div><p class="section-label">今日份额</p><h2 id="session-title">力量 A</h2></div><button class="text-button" id="switch-session">切换</button></div>
-        <p class="session-summary" id="session-summary"></p>
-        <div class="workout-list" id="workout-list"></div>
-        <div class="today-actions"><button class="primary-button" id="complete-session">完成今日训练</button><button class="rest-today" id="rest-today">今日休息</button></div>
-      </section>
-
-      <section class="quick-section">
-        <div class="section-heading"><div><p class="section-label">每日活动</p><h2>5 分钟基础活动</h2></div></div>
-        <div class="repair-grid" id="repair-list"></div>
+      <section class="app-view" id="settings-view" data-view="settings" aria-labelledby="settings-title" hidden>
+        <header class="topbar view-header"><div><p class="eyebrow">偏好设置</p><h1 id="settings-title">训练设置</h1></div></header>
+        <section class="settings-page">
+          <label>每日提醒时间 <input id="reminder-time" type="time" value="19:30" /></label>
+          <button class="primary-button" id="save-settings">保存设置</button>
+          <p class="muted">网页只能在打开时提醒。安装到主屏幕后，可以开启浏览器通知；稳定的定时推送需要部署推送服务。</p>
+        </section>
       </section>
     </main>
+    <nav class="bottom-nav" aria-label="主导航" role="tablist">
+      <button class="nav-item is-active" data-nav-view="today" role="tab" aria-selected="true"><span aria-hidden="true">今日</span><small>训练</small></button>
+      <button class="nav-item" data-nav-view="record" role="tab" aria-selected="false"><span aria-hidden="true">记录</span><small>历史</small></button>
+      <button class="nav-item" data-nav-view="settings" role="tab" aria-selected="false"><span aria-hidden="true">设置</span><small>偏好</small></button>
+    </nav>
     <div class="completion-toast" id="completion-toast" role="status" aria-live="polite">✓ 今日训练已记录</div>
-
-    <dialog id="settings-dialog">
-      <form method="dialog" class="settings-panel">
-        <div class="section-heading"><h2>训练设置</h2><button class="icon-button" value="cancel" aria-label="关闭">×</button></div>
-        <label>每日提醒时间 <input id="reminder-time" type="time" value="19:30" /></label>
-        <button class="primary-button" id="save-settings" value="default">保存设置</button>
-        <p class="muted">提示：网页只能在打开时提醒。安装到主屏幕后，可以开启浏览器通知；稳定的定时推送需要部署推送服务。</p>
-      </form>
-    </dialog>
     <dialog id="video-dialog" class="video-dialog">
       <div class="video-panel">
         <div class="section-heading"><h2 id="video-title">动作指导</h2><button class="icon-button" id="close-video" aria-label="关闭">×</button></div>
