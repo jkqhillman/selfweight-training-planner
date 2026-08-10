@@ -8,17 +8,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="app-icon-180.png" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=40" />
     <title>练得刚好</title>
   </head>
   <body>
     <main class="app-shell">
-      <section class="app-view is-active" id="today-view" data-view="today" aria-labelledby="today-title">
-        <header class="topbar">
-          <div><p class="eyebrow" id="today-date">今日训练</p><h1 id="today-title">练得刚好</h1></div>
-          <button class="icon-button" id="settings-button" aria-label="打开设置" title="设置">⚙</button>
-        </header>
-
+      <section class="app-view" id="plan-view" data-view="plan" aria-labelledby="plan-title" hidden>
+        <header class="topbar view-header"><div><p class="eyebrow">训练安排</p><h1 id="plan-title">选择今天的份额</h1></div></header>
         <section class="readiness" aria-labelledby="readiness-title">
           <div><p class="section-label">每日状态</p><h2 id="readiness-title">今天身体感觉如何？</h2></div>
           <div class="readiness-options" id="readiness-options">
@@ -26,17 +22,27 @@
           </div>
           <p class="status-copy" id="status-copy">按计划完成，所有动作保留 2 次余力。</p>
         </section>
+        <p class="page-intro">按身体状态选择一份可完成的训练。计划始终可以调整。</p>
+        <div class="plan-picker" id="plan-picker"></div>
+      </section>
+
+      <section class="app-view" id="guide-view" data-view="guide" aria-labelledby="guide-title" hidden>
+        <header class="topbar view-header"><div><p class="eyebrow">恢复活动</p><h1 id="guide-title">每日 5 分钟修复</h1></div></header>
+        <p class="page-intro">选择一处稳定支撑，按舒适节奏完成四个动作。需要时可查看图文要点。</p>
+        <div class="guide-library repair-library" id="guide-library"></div>
+      </section>
+
+      <section class="app-view is-active" id="today-view" data-view="today" aria-labelledby="today-title">
+        <header class="topbar home-topbar">
+          <div class="home-identity"><h1 id="today-title">练得刚好</h1><p class="eyebrow" id="today-date">今日训练</p></div>
+          <button class="icon-button" id="settings-button" aria-label="打开设置" title="设置">⚙</button>
+        </header>
 
         <section class="plan-section">
           <div class="section-heading"><div><p class="section-label">今日份额</p><h2 id="session-title">力量 A</h2></div><button class="text-button" id="switch-session">切换</button></div>
           <p class="session-summary" id="session-summary"></p>
           <div class="workout-list" id="workout-list"></div>
           <div class="today-actions"><button class="primary-button" id="complete-session">完成今日训练</button><button class="rest-today" id="rest-today">今日休息</button></div>
-        </section>
-
-        <section class="quick-section">
-          <div class="section-heading"><div><p class="section-label">每日活动</p><h2>5 分钟基础活动</h2></div></div>
-          <div class="repair-grid" id="repair-list"></div>
         </section>
       </section>
 
@@ -48,6 +54,7 @@
           <div class="calendar-grid" id="calendar-grid"></div>
           <p id="calendar-summary">本月从第一份训练开始。</p>
         </section>
+        <figure class="daily-quote" aria-label="每日训练短句"><blockquote id="daily-quote-cn"></blockquote><figcaption id="daily-quote-en"></figcaption><cite id="daily-quote-source"></cite></figure>
       </section>
 
       <section class="app-view" id="settings-view" data-view="settings" aria-labelledby="settings-title" hidden>
@@ -60,9 +67,11 @@
       </section>
     </main>
     <nav class="bottom-nav" aria-label="主导航" role="tablist">
-      <button class="nav-item is-active" data-nav-view="today" role="tab" aria-selected="true"><span aria-hidden="true">今日</span><small>训练</small></button>
-      <button class="nav-item" data-nav-view="record" role="tab" aria-selected="false"><span aria-hidden="true">记录</span><small>历史</small></button>
-      <button class="nav-item" data-nav-view="settings" role="tab" aria-selected="false"><span aria-hidden="true">设置</span><small>偏好</small></button>
+      <button class="nav-item" data-nav-view="plan" role="tab" aria-selected="false"><span>计划</span></button>
+      <button class="nav-item" data-nav-view="guide" role="tab" aria-selected="false"><span>修复</span></button>
+      <button class="nav-item nav-home is-active" data-nav-view="today" role="tab" aria-selected="true" aria-label="返回今日训练" title="今日训练"><span class="home-mark" aria-hidden="true">⌂</span></button>
+      <button class="nav-item" data-nav-view="record" role="tab" aria-selected="false"><span>记录</span></button>
+      <button class="nav-item" data-nav-view="settings" role="tab" aria-selected="false"><span>设置</span></button>
     </nav>
     <div class="completion-toast" id="completion-toast" role="status" aria-live="polite">✓ 今日训练已记录</div>
     <dialog id="video-dialog" class="video-dialog">
@@ -94,6 +103,6 @@
         <div class="feedback-options" id="rest-options"></div>
       </div>
     </dialog>
-    <script src="app.js"></script>
+    <script src="app.js?v=40"></script>
   </body>
 </html>
