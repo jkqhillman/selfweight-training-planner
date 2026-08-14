@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="app-icon-180.png" />
-    <link rel="stylesheet" href="styles.css?v=41" />
+    <link rel="stylesheet" href="styles.css?v=43" />
     <title>练得刚好</title>
   </head>
   <body>
@@ -35,7 +35,7 @@
       <section class="app-view is-active" id="today-view" data-view="today" aria-labelledby="today-title">
         <header class="topbar home-topbar">
           <div class="home-identity"><h1 id="today-title">练得刚好</h1><p class="eyebrow" id="today-date">今日训练</p></div>
-          <div class="topbar-actions"><button class="language-button" id="language-toggle" type="button" aria-label="切换为英文">EN</button><button class="icon-button" id="settings-button" aria-label="打开设置" title="设置">⚙</button></div>
+          <button class="icon-button" id="settings-button" aria-label="打开设置" title="设置">⚙</button>
         </header>
 
         <section class="plan-section">
@@ -62,6 +62,7 @@
         <section class="settings-page">
           <label>每日提醒时间 <input id="reminder-time" type="time" value="19:30" /></label>
           <button class="primary-button" id="save-settings">保存设置</button>
+          <button class="text-button language-button" id="language-toggle" type="button" aria-label="切换为英文">English</button>
           <p class="muted">网页只能在打开时提醒。安装到主屏幕后，可以开启浏览器通知；稳定的定时推送需要部署推送服务。</p>
         </section>
       </section>
@@ -103,6 +104,6 @@
         <div class="feedback-options" id="rest-options"></div>
       </div>
     </dialog>
-    <script src="app.js?v=41"></script>
+    <script src="app.js?v=43"></script>
   </body>
 </html>
