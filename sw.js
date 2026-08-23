@@ -1,9 +1,9 @@
-const CACHE_NAME = 'train-well-v50';
+const CACHE_NAME = 'train-well-v52';
 const APP_SHELL = [
   './',
   'index.html',
   'styles.css?v=50',
-  'app.js?v=50',
+  'app.js?v=52',
   'manifest.webmanifest',
   'app-icon-180.png',
   'app-icon-512.png'

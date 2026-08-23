@@ -44,11 +44,26 @@ enum SessionKind: String, CaseIterable, Codable, Identifiable {
 }
 
 struct Exercise: Identifiable, Hashable {
+    enum ProgressScope: String, Hashable {
+        case plan
+        case recovery
+    }
+
     let name: String
     let dose: String
     let purpose: String
     let image: String
     let steps: [String]
+    let progressScope: ProgressScope
+
+    init(name: String, dose: String, purpose: String, image: String, steps: [String], progressScope: ProgressScope = .plan) {
+        self.name = name
+        self.dose = dose
+        self.purpose = purpose
+        self.image = image
+        self.steps = steps
+        self.progressScope = progressScope
+    }
     var id: String { name }
     private static let setPattern = try! NSRegularExpression(pattern: #"(\d+)(?:-\d+)?\s*组"#)
     private static let timePattern = try! NSRegularExpression(pattern: #"(\d+)(?:-\d+)?\s*(分钟|分|秒)"#)
@@ -115,8 +130,8 @@ let trainingPlans: [SessionKind: [Exercise]] = [
 ]
 
 let dailyRepair: [Exercise] = [
-    Exercise(name: "单脚站立", dose: "每侧 2 组 x 30 秒", purpose: "练脚踝平衡，增强落地稳定", image: "single-leg-stand", steps: ["站在墙边或椅旁。", "支撑脚三点均匀着地。", "摇晃时可轻触墙面。"]),
-    Exercise(name: "慢速提踵", dose: "3 组 x 12-20 次", purpose: "强化小腿与踝部控制", image: "slow-calf-raise", steps: ["扶墙站稳，双脚平行。", "抬起脚跟，顶部停一秒。", "用 2-3 秒慢慢放下。"]),
-    Exercise(name: "墙面肩胛俯卧撑", dose: "2 组 x 10-15 次", purpose: "唤醒肩胛控制", image: "wall-scapular-push", steps: ["双手撑墙，手臂伸直。", "不屈肘，只让肩胛靠近再推远。", "出现不稳时停止。"]),
-    Exercise(name: "墙面滑手", dose: "2 组 x 8-12 次", purpose: "保持肩部活动，改善肩胛配合", image: "wall-slide", steps: ["肩颈放松，肋骨轻收。", "沿墙上滑至舒适范围。", "动作小而慢。"])
+    Exercise(name: "单脚站立", dose: "每侧 2 组 x 30 秒", purpose: "练脚踝平衡，增强落地稳定", image: "single-leg-stand", steps: ["站在墙边或椅旁。", "支撑脚三点均匀着地。", "摇晃时可轻触墙面。"], progressScope: .recovery),
+    Exercise(name: "慢速提踵", dose: "3 组 x 12-20 次", purpose: "强化小腿与踝部控制", image: "slow-calf-raise", steps: ["扶墙站稳，双脚平行。", "抬起脚跟，顶部停一秒。", "用 2-3 秒慢慢放下。"], progressScope: .recovery),
+    Exercise(name: "墙面肩胛俯卧撑", dose: "2 组 x 10-15 次", purpose: "唤醒肩胛控制", image: "wall-scapular-push", steps: ["双手撑墙，手臂伸直。", "不屈肘，只让肩胛靠近再推远。", "出现不稳时停止。"], progressScope: .recovery),
+    Exercise(name: "墙面滑手", dose: "2 组 x 8-12 次", purpose: "保持肩部活动，改善肩胛配合", image: "wall-slide", steps: ["肩颈放松，肋骨轻收。", "沿墙上滑至舒适范围。", "动作小而慢。"], progressScope: .recovery)
 ]

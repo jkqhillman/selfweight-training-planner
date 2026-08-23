@@ -42,12 +42,25 @@ final class TrainingStore: ObservableObject {
         self.setChecks = (try? JSONDecoder().decode([String: [Int]].self, from: defaults.data(forKey: setChecksKey) ?? Data())) ?? [:]
         self.restedExercises = (try? JSONDecoder().decode([String: String].self, from: defaults.data(forKey: restedExercisesKey) ?? Data())) ?? [:]
         self.cappedExercises = Set((try? JSONDecoder().decode([String].self, from: defaults.data(forKey: cappedExercisesKey) ?? Data())) ?? [])
+        autoCompleteIfReady()
     }
 
     var today: Date { Calendar.current.startOfDay(for: .now) }
     var isCompleteToday: Bool { completed[today] != nil }
     var isRestingToday: Bool { completed[today] == .recovery }
     var exercises: [Exercise] { trainingPlans[currentSession] ?? [] }
+
+    private var allCurrentExercisesComplete: Bool {
+        !exercises.isEmpty && exercises.allSatisfy { exercise in
+            isResting(exercise) == nil && !isCapped(exercise) && (0..<exercise.setCount).allSatisfy { isSetComplete($0, for: exercise) }
+        }
+    }
+
+    private func autoCompleteIfReady() {
+        guard !isCompleteToday, allCurrentExercisesComplete else { return }
+        completed[today] = currentSession
+        save()
+    }
 
     func isSetComplete(_ index: Int, for exercise: Exercise) -> Bool { setChecks[setKey(exercise), default: []].contains(index) }
     func toggleSet(_ index: Int, for exercise: Exercise) {
@@ -57,6 +70,7 @@ final class TrainingStore: ObservableObject {
         checked = checked.contains(index) ? checked.filter { $0 != index } : (checked + [index]).sorted()
         setChecks[key] = checked
         defaults.set(try? JSONEncoder().encode(setChecks), forKey: setChecksKey)
+        autoCompleteIfReady()
     }
 
     func cycleSession() {
@@ -150,7 +164,14 @@ final class TrainingStore: ObservableObject {
     }
     private func persistLimits() { defaults.set(try? JSONEncoder().encode(restedExercises), forKey: restedExercisesKey); defaults.set(try? JSONEncoder().encode(Array(cappedExercises)), forKey: cappedExercisesKey) }
 
-    private func setKey(_ exercise: Exercise) -> String { "\(today.timeIntervalSince1970)|\(currentSession.rawValue)|\(exercise.id)" }
+    private func setKey(_ exercise: Exercise) -> String {
+        switch exercise.progressScope {
+        case .plan:
+            return "\(today.timeIntervalSince1970)|\(currentSession.rawValue)|\(exercise.id)"
+        case .recovery:
+            return "\(today.timeIntervalSince1970)|recovery|\(exercise.id)"
+        }
+    }
 
     private static func nextStrengthSession(_ records: [Date: SessionKind]) -> SessionKind? {
         let last = records.sorted { $0.key < $1.key }.last(where: { $0.value == .strengthA || $0.value == .strengthB })?.value
